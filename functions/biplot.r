@@ -13,7 +13,8 @@ obs.color.title=NULL,obs.pch.title=NULL,
 var.suppl=NULL,var.suppl.color=NULL,var.text.size=3,
 var.arrow.size=.2,main="Biplot",
 asp=NULL,
-alpha=1/2,...) {
+alpha=1/2,
+xlim=NULL,ylim=NULL,...) {
 
   #######################
   SV=.convertAny2SVD(SV)
@@ -40,7 +41,18 @@ alpha=1/2,...) {
   xLabel=ifelse(addPercEV,paste("Pc",x," (",round(SV$d[idx]^2/sum(SV$d^2)*100,0),"%)",sep=""),x)  
   yLabel=ifelse(addPercEV,paste("Pc",y," (",round(SV$d[idy]^2/sum(SV$d^2)*100,0),"%)",sep=""),y)  
   
-  plot(X, # xlim=range(c(SV$x[,1],ARROWS[,1])), ylim=range(c(SV$x[,2],ARROWS[,2])),
+  if(is.null(xlim)){
+    temp=range(c(X[,1],ARROWS[,1])) 
+    temp=max(abs(temp))
+    xlim=c(-temp,temp)
+  }
+  if(is.null(ylim)){
+    temp=range(c(X[,2],ARROWS[,2])) 
+    temp=max(abs(temp))
+    ylim=c(-temp,temp)
+  }
+  
+  plot(X,  xlim=xlim, ylim=ylim,
        xlab=xLabel,
        ylab=yLabel,
        col=obs.opt$col,
