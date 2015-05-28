@@ -16,13 +16,13 @@
  leg.pars
 }
 ####################### .get.obs.opt
-.get.obs.opt <- function(obs.opt,obs.col.palette=NULL,PC){
+.get.obs.opt <- function(obs.opt,obs.col.palette=NULL,SV){
   
   #   if(is.null(var.suppl.opt$col)) var.suppl.color=greyUnipd
   if(is.null(obs.opt$names)) obs.names=FALSE
   if(is.logical(obs.opt$names) && (obs.opt$names==TRUE)) 
-    obs.opt$obs.names=if(is.null(row.names(PC$x))) 
-      as.character(1:n) else row.names(PC$x)
+    obs.opt$obs.names=if(is.null(row.names(SV$x))) 
+      as.character(1:n) else row.names(SV$x)
   
   if(is.null(obs.opt$col)) obs.opt$col=1
   if(obs.opt$col[1]=="each.obs")
@@ -41,8 +41,8 @@
 
 
 #################.get.var.opt
-.get.var.opt <- function(var.opt,var.col.palette,PC){
-  if(is.null(var.opt$names)) var.names=rownames(PC$rotation)
+.get.var.opt <- function(var.opt,var.col.palette,SV){
+  if(is.null(var.opt$names)) var.names=rownames(SV$rotation)
   if(is.null(var.opt$col)) var.opt$col=2
   if(!is.null(var.col.palette))
     palette(var.col.palette) 

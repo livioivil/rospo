@@ -28,11 +28,13 @@ pal.tre=c("#aa5511",
           "#331155")
 
 X=t(matrix(1:10,10,4))
+# 
+# matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.uno,main="pal.uno")
+# matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.unipd,main="pal.unipd")
+# matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.due,main="pal.due")
+# matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.tre,main="pal.tre")
+# 
 
-matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.uno,main="pal.uno")
-matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.unipd,main="pal.unipd")
-matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.due,main="pal.due")
-matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.tre,main="pal.tre")
 
 # pal.my=c("#994500","#005499","#331122","#113322","#009945","#445566","#556644","#773300")
 
@@ -49,3 +51,4 @@ matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.tre,main="pal.tre"
 
 # palette(pal.autumn)
 # matplot(t(X), type = "b", pch = 21:23, col = 1:6, bg = 1:6,lwd=3)
+
