@@ -15,13 +15,18 @@ Y=matrix(rnorm(30),10,3)
 rownames(Y)=paste("obs",1:nrow(Y))
 sv=svd(Y)
 
+pc.biplot(sv)
+
+#i nomi vengono persi con svd
+pc.biplot(sv,obs.names = TRUE)
+# soluzione a mano
+rownames(sv$u)=rownames(Y)
 pc.biplot(sv,obs.names = TRUE)
 
 pc=princomp(Y)
-
 pc.biplot(pc,obs.names = TRUE)
 
-pc.biplot(sv)
-pc.biplot(sv,asp=1,obs.col.palette = pal.unipd.76)
 
-pc.biplot(sv,asp=1,obs.col.palette = pal.uno)
+pc.biplot(sv,asp=1,obs.col.palette = pal.uno,obs.opt = list(col=1:10))
+
+pc.biplot(sv,asp=1,obs.col.palette = pal.unipd.76,obs.opt = list(col=1:10))

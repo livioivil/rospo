@@ -28,7 +28,7 @@
   if(obs.opt$col[1]=="each.obs")
     obs.opt$col=1:n
 
-  if(is.null(obs.opt$pch)) obs.opt$pch=21
+  if(is.null(obs.opt$pch)) obs.opt$pch=20
   
   if(is.null(obs.opt$bg)) obs.opt$bg=1
   if(obs.opt$bg[1]=="each.obs")

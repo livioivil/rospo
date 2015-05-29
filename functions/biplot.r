@@ -3,19 +3,20 @@
 pc.biplot <- function(SV, x=1, y=2, title="Biplot", 
                      obs.opt=list(cex=2,pch=20),
                      obs.names=FALSE,
-obs.col.palette=NULL,  
-var.names=NULL, var.opt=NULL,
-var.col.palette=NULL, lwd=2,
-filename=NULL,
-# loadingsTextJitter= position_jitter(w = 0.2, h = 0.2),
-# scoresJitter=  position_jitter(w = .2, h = .2),
-addPercEV=TRUE,
-obs.color.title=NULL,obs.pch.title=NULL,
-var.suppl=NULL,var.suppl.color=NULL,var.text.size=3,
-var.arrow.size=.2,main="Biplot",
-asp=NULL,
-alpha=1/2,
-xlim=NULL,ylim=NULL,...) {
+                     obs.col.palette=NULL,  
+                     var.opt=NULL,
+                     var.names=NULL, 
+                     var.col.palette=NULL, 
+                     lwd=2,
+                     filename=NULL,
+                     addPercEV=TRUE, 
+                     obs.color.title=NULL,obs.pch.title=NULL,
+                     var.suppl=NULL,var.suppl.color=NULL,
+                     var.text.size=3,
+                     var.arrow.size=.2,main="Biplot",
+                     asp=NULL,
+                     alpha=1/2,
+                     xlim=NULL,ylim=NULL,...) {
 
   #######################
   SV=.convertAny2SVD(SV)
@@ -65,8 +66,9 @@ xlim=NULL,ylim=NULL,...) {
        pch=obs.opt$pch,
        cex=obs.opt$cex,
        main=main, asp=asp,...)
-  if(obs.names!=FALSE){
-    if(obs.names==TRUE)      obs.names=rownames(X)
+  if((obs.names!=FALSE)||(length(obs.names)>1)){
+    if(length(obs.names)==1 && (obs.names==TRUE)) 
+      obs.names=rownames(X)
     if(is.null(obs.names)) obs.names=1:nrow(X)
     text(X[,1]+.1,X[,2]+.1,labels = obs.names)
   }
