@@ -50,7 +50,7 @@ which.hasname <- function(X,name){
     names(SV)[which.hasname(SV,"rotation")]="v"    
   }  
   
-  SV$u=.fix.names(SV$u,1,"Pc")
+  SV$u=.fix.names(SV$u,1,"")
   SV$v=.fix.names(SV$v,2,"Pc")
   SV$v=.fix.names(SV$v,1,"Var")
   SV

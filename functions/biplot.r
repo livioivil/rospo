@@ -2,6 +2,7 @@
 
 pc.biplot <- function(SV, x=1, y=2, title="Biplot", 
                      obs.opt=list(cex=2,pch=20),
+                     obs.names=FALSE,
 obs.col.palette=NULL,  
 var.names=NULL, var.opt=NULL,
 var.col.palette=NULL, lwd=2,
@@ -64,7 +65,11 @@ xlim=NULL,ylim=NULL,...) {
        pch=obs.opt$pch,
        cex=obs.opt$cex,
        main=main, asp=asp,...)
-  
+  if(obs.names!=FALSE){
+    if(obs.names==TRUE)      obs.names=rownames(X)
+    if(is.null(obs.names)) obs.names=1:nrow(X)
+    text(X[,1]+.1,X[,2]+.1,labels = obs.names)
+  }
   temp=axis(1)
   axis(3,at=temp,labels=round(temp*rescale.coefs[1],2),col =var.opt$col[1])
   temp=axis(2)

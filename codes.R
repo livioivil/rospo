@@ -12,7 +12,14 @@ matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.tre,main="pal.tre"
 
 
 Y=matrix(rnorm(30),10,3)
+rownames(Y)=paste("obs",1:nrow(Y))
 sv=svd(Y)
+
+pc.biplot(sv,obs.names = TRUE)
+
+pc=princomp(Y)
+
+pc.biplot(pc,obs.names = TRUE)
 
 pc.biplot(sv)
 pc.biplot(sv,asp=1,obs.col.palette = pal.unipd.76)
