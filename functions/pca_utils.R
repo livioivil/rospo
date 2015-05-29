@@ -40,6 +40,15 @@ which.hasname <- function(X,name){
     #matrice loadings
     names(SV)[which.hasname(SV,"loadings")]="v"    
   }  
+  if(is(SV,"prcomp")){
+    #rinomina e riscala per generare gli score
+    names(SV)[which.hasname(SV,"x")]="u"
+    SV$u=SV$u%*%diag(1/SV$sdev)/sqrt(nrow(SV$u))
+    #dev std delle SV
+    names(SV)[which.hasname(SV,"sdev")]="d"
+    #matrice loadings
+    names(SV)[which.hasname(SV,"rotation")]="v"    
+  }  
   
   SV$u=.fix.names(SV$u,1,"Pc")
   SV$v=.fix.names(SV$v,2,"Pc")

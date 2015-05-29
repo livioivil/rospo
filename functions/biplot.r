@@ -23,6 +23,7 @@ xlim=NULL,ylim=NULL,...) {
   n.obs=nrow(SV$u)
   n.vars=nrow(SV$v)
   obs.opt=.get.obs.opt(obs.opt,obs.col.palette,SV=SV)
+  var.opt=.get.var.opt(var.opt,var.col.palette,SV=SV)
   
   
   
@@ -36,7 +37,10 @@ xlim=NULL,ylim=NULL,...) {
   } else idy=y
   
   X=SV$u[,c(idx,idy)]%*%diag(SV$d[c(idx,idy)]^alpha)*sqrt(n.obs) 
-  ARROWS=SV$v[,c(idx,idy)]%*%diag(SV$d[c(idx,idy)]^alpha)*sqrt(n.vars)
+  ARROWS=SV$v[,c(idx,idy)]%*%diag(SV$d[c(idx,idy)]^(1-alpha))*sqrt(n.vars)
+  rescale.coefs=(SV$d[c(idx,idy)]^alpha)*(SV$d[c(idx,idy)]^(1-alpha))/sqrt(n.obs)*sqrt(n.vars)
+  
+  
   
   xLabel=ifelse(addPercEV,paste("Pc",x," (",round(SV$d[idx]^2/sum(SV$d^2)*100,0),"%)",sep=""),x)  
   yLabel=ifelse(addPercEV,paste("Pc",y," (",round(SV$d[idy]^2/sum(SV$d^2)*100,0),"%)",sep=""),y)  
@@ -52,7 +56,7 @@ xlim=NULL,ylim=NULL,...) {
     ylim=c(-temp,temp)
   }
   
-  plot(X,  xlim=xlim, ylim=ylim,
+  plot(X,  xlim=xlim, ylim=ylim, axes=FALSE,
        xlab=xLabel,
        ylab=yLabel,
        col=obs.opt$col,
@@ -61,7 +65,11 @@ xlim=NULL,ylim=NULL,...) {
        cex=obs.opt$cex,
        main=main, asp=asp,...)
   
-  var.opt=.get.var.opt(var.opt,var.col.palette,SV=SV)
+  temp=axis(1)
+  axis(3,at=temp,labels=round(temp*rescale.coefs[1],2),col =var.opt$col[1])
+  temp=axis(2)
+  axis(4,at=temp,labels=round(temp*rescale.coefs[2],2),col =var.opt$col[1])
+
   arrows(0,0,ARROWS[,1],ARROWS[,2],col=var.opt$col,
          lwd=lwd,angle=15,length=.1)
   text(ARROWS[,1],ARROWS[,2],labels=rownames(ARROWS),col="gray30")
