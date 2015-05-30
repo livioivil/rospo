@@ -1,5 +1,8 @@
 #SV e' il risultato di prcomp, di princomp o di svd.
-
+# assi calcolati come in 
+# http://en.wikipedia.org/wiki/Biplot
+## si veda anche
+# http://www.multivariatestatistics.org/biplots.html
 pc.biplot <- function(SV, x=1, y=2, title="Biplot", 
                      obs.opt=list(cex=2,pch=20),
                      obs.names=FALSE,
@@ -16,7 +19,8 @@ pc.biplot <- function(SV, x=1, y=2, title="Biplot",
                      var.arrow.size=.2,main="Biplot",
                      asp=NULL,
                      alpha=1/2,
-                     xlim=NULL,ylim=NULL,...) {
+                     xlim=NULL,ylim=NULL,
+                     legend=NULL,...) {
 
   #######################
   SV=.convertAny2SVD(SV)
@@ -58,6 +62,10 @@ pc.biplot <- function(SV, x=1, y=2, title="Biplot",
     ylim=c(-temp,temp)
   }
   
+  #gestione dei margins perchè il titolo di non si sovrapponga alle labels dell'asse 3
+  old.par.mar=par()$mar
+  par(mar=old.par.mar+c(0,0,2,0))
+  
   plot(X,  xlim=xlim, ylim=ylim, axes=FALSE,
        xlab=xLabel,
        ylab=yLabel,
@@ -70,7 +78,7 @@ pc.biplot <- function(SV, x=1, y=2, title="Biplot",
     if(length(obs.names)==1 && (obs.names==TRUE)) 
       obs.names=rownames(X)
     if(is.null(obs.names)) obs.names=1:nrow(X)
-    text(X[,1]+.1,X[,2]+.1,labels = obs.names)
+    text(X[,1]+.15,X[,2]+.15,labels = obs.names)
   }
   temp=axis(1)
   axis(3,at=temp,labels=round(temp*rescale.coefs[1],2),col =var.opt$col[1])
@@ -84,9 +92,12 @@ pc.biplot <- function(SV, x=1, y=2, title="Biplot",
   abline(v=0,col="gray90")
   abline(h=0,col="gray90")
   
-  legend.pars=.get.legend.pars (obs.opt)
-if(!is.null(legend.pars))
-  legend(legend=legend.pars$legend,col=legend.pars$col,
-       pch=legend.pars$pch,...)
-
+  if(is.null(legend)){
+    legend.opt=.get.legend.opt(legend,obs.opt)
+    if(!is.null(legend.opt))
+    legend(legend.opt$x,legend.opt$y,
+      legend=legend.opt$legend,col=legend.opt$col,
+         pch=legend.opt$pch,bty=legend.opt$bty)
+  }
+par(mar=old.par.mar)
 }

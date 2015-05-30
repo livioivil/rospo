@@ -1,19 +1,26 @@
-###################### .get.legend.pars
-.get.legend.pars <- function(obs.opt){
- leg.elements= apply(cbind(col=obs.opt$col,bg=obs.opt$bg,pch=obs.opt$pch),
-        1, paste,collapse="__")
- if(length(leg.elements)) 
-   leg.pars=NULL else {
-     leg.el.col=cbind(legend=unique(obs.opt$col),pch=1,col=unique(obs.opt$col))
-     leg.el.pch=cbind(legend=unique(obs.opt$col),col=1,pch=unique(obs.opt$pch))
-     #da modificare:
-     leg.el.col$bg=leg.el.col$col
-     leg.el.pch$bg=leg.el.pch$col
-     leg.pars=rbind(leg.el.col,leg.el.pch)
-     if(is.null(legend.opt$bty)) legend.opt$bty="n"
+###################### .get.legend.opt
+.get.legend.opt <- function(legend.opt,obs.opt){
+  identificatori.gruppi=c("col","bg","pch")
+
+  leg.elements=unique(as.data.frame(obs.opt[identificatori.gruppi]),MARGIN = 1)
+  if((nrow(leg.elements)<=1)&&(is.null(legend.opt)))
+    legend.opt=NULL else 
+      { 
+        #legent.opt default
+        if(is.null(legend.opt)){
+           legend.opt=as.list(rep(NA,length(identificatori.gruppi)+1))
+           names(legend.opt)=c(identificatori.gruppi,"x")
+           legend.opt$x="bottomleft"
+           }
+        elementi.variabili=names(which(apply(leg.elements,2,function(x)length(unique(x))>1)))
+        legend.opt$legend=apply(leg.elements[,elementi.variabili,drop=FALSE],1,paste,collapse="-")
+
+        for (i in setdiff(identificatori.gruppi,names(which(!is.na(legend.opt)))))
+          legend.opt[[i]]=leg.elements[,i]
+#         names(legend.opt)[which(names(legend.opt)=="bg")]="fill"
+        if(is.null(legend.opt$bty)) legend.opt$bty="n"
    }
- 
- leg.pars
+  legend.opt
 }
 ####################### .get.obs.opt
 .get.obs.opt <- function(obs.opt,obs.col.palette=NULL,SV){

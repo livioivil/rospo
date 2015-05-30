@@ -23,10 +23,20 @@ pc.biplot(sv,obs.names = TRUE)
 rownames(sv$u)=rownames(Y)
 pc.biplot(sv,obs.names = TRUE)
 
+
+###########
+sv=svd(scale(Y,center=TRUE,scale=FALSE))
+pc.biplot(sv,obs.names = TRUE)
+
 pc=princomp(Y)
 pc.biplot(pc,obs.names = TRUE)
 
+pc=prcomp(Y)
+pc.biplot(pc,obs.names = TRUE)
 
-pc.biplot(sv,asp=1,obs.col.palette = pal.uno,obs.opt = list(col=1:10))
+pc.biplot(sv,asp=1,obs.col.palette = pal.uno)
 
-pc.biplot(sv,asp=1,obs.col.palette = pal.unipd.76,obs.opt = list(col=1:10))
+pc.biplot(sv,asp=1,obs.col.palette = pal.unipd.76)
+
+
+pc.biplot(pc,obs.opt = list(col=rep(1:2,5)))
