@@ -1,5 +1,5 @@
-##### come by ma restituisce un data.frame
-by.df<-function(...){
+by.df <-
+function(...){
   rr=by(...)
   attr(rr,"class")="list"
   rr=data.frame(rr)
@@ -9,8 +9,3 @@ by.df<-function(...){
   } else rownames(rr)=unique(list(...)[[2]])
   rr
 }
-
-##############
-colVars <- function(X,...) apply(X,2,var,...)
-rowVars <- function(X,...) apply(X,1,var,...)
-

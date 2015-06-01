@@ -1,9 +1,5 @@
-#SV e' il risultato di prcomp, di princomp o di svd.
-# assi calcolati come in 
-# http://en.wikipedia.org/wiki/Biplot
-## si veda anche
-# http://www.multivariatestatistics.org/biplots.html
-pc.biplot <- function(SV, x=1, y=2, title="Biplot", 
+pc.biplot <-
+function(SV, x=1, y=2, title="Biplot", 
                      obs.opt=list(cex=2,pch=20),
                      obs.names=FALSE,
                      obs.col.palette=NULL,  

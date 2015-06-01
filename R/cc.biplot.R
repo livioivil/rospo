@@ -1,6 +1,5 @@
-####### biplot per Canonical correlation come da library(CCA) cc()
-#### vedi prima PCbiplot qui sotto
-cc.biplot<-  function(SV, x=1, y=2, title="Biplot",
+cc.biplot <-
+function(SV, x=1, y=2, title="Biplot",
                       obs.names=NULL, obs.opt=list(cex=2), obs.label.size=obs.size,
                       obs.col.palette=NULL,  
                       var.names.x=NULL, var.names.y=NULL, 

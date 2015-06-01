@@ -1,0 +1,10 @@
+Package: rospo
+Type: Package
+Title: Utilities from associazionerospo.org
+Version: 1.0
+Date: 2015-06-01
+Author: Associazione ROSPO
+Maintainer: livio finos <info@associazionerospo.org>
+Description: Utilities from associazionerospo.org 
+License: GPL (>= 2)
+LazyLoad: yes
