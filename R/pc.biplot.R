@@ -1,5 +1,5 @@
 pc.biplot <-
-function(SV, x=1, y=2, title="Biplot", 
+function(SV, x=1, y=2,  
                      obs.opt=list(cex=2,pch=20),
                      obs.names=FALSE,
                      obs.col.palette=NULL,  
@@ -9,10 +9,13 @@ function(SV, x=1, y=2, title="Biplot",
                      lwd=2,
                      filename=NULL,
                      addPercEV=TRUE, 
-                     obs.color.title=NULL,obs.pch.title=NULL,
                      var.suppl=NULL,var.suppl.color=NULL,
                      var.text.size=3,
-                     var.arrow.size=.2,main="Biplot",
+                     var.text.col="gray30",
+                     var.text.relpos=NULL,
+                     var.text.cex=1,
+                     var.arrow.size=.2,
+                     main="Biplot",
                      asp=NULL,
                      alpha=1/2,
                      xlim=NULL,ylim=NULL,
@@ -80,15 +83,22 @@ function(SV, x=1, y=2, title="Biplot",
   axis(3,at=temp,labels=round(temp*rescale.coefs[1],2),col =var.opt$col[1])
   temp=axis(2)
   axis(4,at=temp,labels=round(temp*rescale.coefs[2],2),col =var.opt$col[1])
-
-  arrows(0,0,ARROWS[,1],ARROWS[,2],col=var.opt$col,
-         lwd=lwd,angle=15,length=.1)
-  text(ARROWS[,1],ARROWS[,2],labels=rownames(ARROWS),col="gray30")
   
+  #add horiz and vert 0-lines
   abline(v=0,col="gray90")
   abline(h=0,col="gray90")
   
-  if(is.null(legend)){
+  arrows(0,0,ARROWS[,1],ARROWS[,2],col=var.opt$col,
+         lwd=lwd,angle=15,length=.1)
+  if(!is.null(var.text.relpos)) 
+    var.text.xy=ARROWS*var.text.relpos else 
+      var.text.xy=ARROWS
+  text(var.text.xy[,1],var.text.xy[,2],labels=rownames(ARROWS),
+       col=var.text.col,cex=var.text.cex)
+  
+  
+  
+  if((legend==TRUE)||is.null(legend)){
     legend.opt=.get.legend.opt(legend,obs.opt)
     if(!is.null(legend.opt))
     legend(legend.opt$x,legend.opt$y,
