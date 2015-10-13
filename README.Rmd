@@ -13,8 +13,6 @@ To **install** this github package (in R):
     install_github("livioivil/rospo")
 
 
-* * *
-
 ## Some examples
 
 ```{r,  message = FALSE}
