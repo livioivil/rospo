@@ -27,7 +27,7 @@ Maintainer: \packageMaintainer{rospo}
 
 \examples{
 
-data(pal.unipd76)
+data(pal.unipd.76)
 
 ####### webplot
 X <- as.data.frame(matrix(rpois(30,3),3,10))
