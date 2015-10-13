@@ -1,19 +1,16 @@
 
-# Welcome to the dev-version of the 
-
-#[library flip on CRAN](http://cran.r-project.org/web/packages/flip/index.html)
-
+# Utilities from associazionerospo.org 
 
 * * *
 
 ## Set up
 
-To **install** this github version type (in R):
+To **install** this github package (in R):
 
     #if devtools is not installed yet: 
     # install.packages("devtools") 
     library(devtools)
-    install_github("flip", "livioivil")
+    install_github("livioivil/rospo")
 
 
 * * *
@@ -21,7 +18,39 @@ To **install** this github version type (in R):
 ## Some examples
 
 ```{r,  message = FALSE}
-library(flip)
+library(rospo)
+
+data(pal.uno)
+
+par(mar=c(1,1,1,1))
+Y=matrix(rnorm(30),10,3)
+rownames(Y)=paste("obs",1:nrow(Y))
+sv=svd(Y)
+
+pc.biplot(sv)
+
+#i nomi vengono persi con svd
+pc.biplot(sv,obs.names = TRUE)
+# soluzione a mano
+rownames(sv$u)=rownames(Y)
+pc.biplot(sv,obs.names = TRUE)
+
+
+###########
+sv=svd(scale(Y,center=TRUE,scale=FALSE))
+pc.biplot(sv,obs.names = TRUE)
+
+pc=princomp(Y)
+pc.biplot(pc,obs.names = TRUE)
+
+pc=prcomp(Y)
+pc.biplot(pc,obs.names = TRUE)
+
+pc.biplot(sv,asp=1,obs.col.palette = pal.uno)
+
+
+
+pc.biplot(sv,obs.opt = list(col=rep(1:2,5)))
 ```
 
 _A univariate analysis_
