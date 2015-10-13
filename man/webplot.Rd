@@ -1,4 +1,4 @@
-\name{webplot}
+  \name{webplot}
 \alias{webplot}
 \alias{webplot.multi}
 %- Also NEED an '\alias' for EACH other topic documented here.
