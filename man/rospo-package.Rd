@@ -27,8 +27,13 @@ Maintainer: \packageMaintainer{rospo}
 
 \examples{
 
-data(pal.uno)
+data(pal.unipd76)
 
+####### webplot
+X <- as.data.frame(matrix(rpois(30,3),3,10))
+webplot.multi(X,col=pal.unipd)
+
+####### biplot
 par(mar=c(1,1,1,1))
 Y=matrix(rnorm(30),10,3)
 rownames(Y)=paste("obs",1:nrow(Y))

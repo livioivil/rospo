@@ -32,7 +32,9 @@ webplot(data, data.row = NULL, y.cols = NULL, main = NULL, add = F, col = "red",
 %%     ~~Describe \code{col} here~~
 }
   \item{scale}{
-%%     ~~Describe \code{scale} here~~
+if \code{TRUE}:
+    data = apply(data, 2, function(x) ((x - min(x))/(max(x)-min(x))+.1)/1.1)
+
 }
   \item{col}{
 as in \code{plot()}
@@ -78,7 +80,7 @@ as in \code{plot()}
 \examples{
 data(pal.unipd)
 
-X <- as.data.frame(matrix(rnorm(30),3,10))
+X <- as.data.frame(matrix(rpois(30,100),3,10))
 webplot.multi(X[1,])
 webplot.multi(X,col=pal.unipd)
 }
