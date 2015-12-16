@@ -1,3 +1,40 @@
+#' webplot
+#' 
+#' webplot
+#' 
+#' %% ~~ If necessary, more details than the description above ~~
+#' 
+#' @aliases webplot webplot.multi
+#' @param data %% ~~Describe \code{data} here~~
+#' @param data.row %% ~~Describe \code{data.row} here~~
+#' @param y.cols %% ~~Describe \code{y.cols} here~~
+#' @param main %% ~~Describe \code{main} here~~
+#' @param add %% ~~Describe \code{add} here~~
+#' @param col %% ~~Describe \code{col} here~~
+#' @param scale if \code{TRUE}: data = apply(data, 2, function(x) ((x -
+#' min(x))/(max(x)-min(x))+.1)/1.1)
+#' @param col as in \code{plot()}
+#' @param lwd as in \code{plot()}
+#' @param lty as in \code{plot()}
+#' @param cex as in \code{plot()}
+#' @param \dots %% ~~Describe \code{\dots} here~~
+#' @return %% ~Describe the value returned %% If it is a LIST, use %%
+#' \item{comp1 }{Description of 'comp1'} %% \item{comp2 }{Description of
+#' 'comp2'} %% ...
+#' @note %% ~~further notes~~
+#' @author %% ~~who you are~~
+#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
+#' @references %% ~put references to the literature/web site here ~
+#' @keywords ~kwd1 ~kwd2
+#' @examples
+#' 
+#' data(pal.unipd)
+#' 
+#' X <- as.data.frame(matrix(rpois(30,100),3,10))
+#' webplot.multi(X[1,])
+#' webplot.multi(X,col=pal.unipd)
+#' 
+#' @export webplot
 webplot <-
 function(data, data.row = NULL, y.cols = NULL, main = NULL, add = F, 
                    col = "red", scale = T, lwd=3, lty=1, cex=1,

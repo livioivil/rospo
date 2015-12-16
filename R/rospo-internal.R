@@ -33,7 +33,7 @@ function(SV){
   
   SV$u=.fix.names(SV$u,1,"")
   SV$v=.fix.names(SV$v,2,"Pc")
-  SV$v=.fix.names(SV$v,1,"Var")
+  SV$d=.fix.names(SV$d,1,"Sd")
   SV
 }
 .fix.col.pc.names <-
@@ -44,8 +44,13 @@ function(mat){
 }
 .fix.names <-
 function(mat,ndim=1,prefix="PC"){
-  if(is.null(dimnames(mat)[[ndim]])) 
-    dimnames(mat)[[ndim]]=paste(prefix,1:dim(mat)[ndim],sep="")
+  if(is.vector(mat)){
+    if(is.null(names(mat)))
+      names(mat)=paste(prefix,1:length(mat),sep="") 
+    } else if(is.null(dimnames(mat)[[ndim]]))
+      { 
+      dimnames(mat)[[ndim]]=paste(prefix,1:dim(mat)[ndim],sep="")
+    }
   mat
 }
 .get.legend.opt <-
@@ -78,8 +83,8 @@ function(obs.opt,obs.col.palette=NULL,SV){
   #   if(is.null(var.suppl.opt$col)) var.suppl.color=greyUnipd
   if(is.null(obs.opt$names)) obs.names=FALSE
   if(is.logical(obs.opt$names) && (obs.opt$names==TRUE)) 
-    obs.opt$obs.names=if(is.null(row.names(SV$x))) 
-      as.character(1:n) else row.names(SV$x)
+    obs.opt$obs.names=if(is.null(row.names(SV$u))) 
+      as.character(1:n) else row.names(SV$u)
   
   if(is.null(obs.opt$col)) obs.opt$col=1
   if(obs.opt$col[1]=="each.obs")

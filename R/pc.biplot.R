@@ -1,3 +1,82 @@
+#' pc.biplot
+#' 
+#' SV e' il risultato di prcomp, di princomp o di svd.  assi calcolati come in
+#' http://en.wikipedia.org/wiki/Biplot si veda anche
+#' http://www.multivariatestatistics.org/biplots.html
+#' 
+#' %% ~~ If necessary, more details than the description above ~~
+#' 
+#' @param SV %% ~~Describe \code{SV} here~~
+#' @param x %% ~~Describe \code{x} here~~
+#' @param y %% ~~Describe \code{y} here~~
+#' @param title %% ~~Describe \code{title} here~~
+#' @param obs.opt %% ~~Describe \code{obs.opt} here~~
+#' @param obs.names %% ~~Describe \code{obs.names} here~~
+#' @param obs.col.palette %% ~~Describe \code{obs.col.palette} here~~
+#' @param var.opt %% ~~Describe \code{var.opt} here~~
+#' @param var.names %% ~~Describe \code{var.names} here~~
+#' @param var.col.palette %% ~~Describe \code{var.col.palette} here~~
+#' @param lwd %% ~~Describe \code{lwd} here~~
+#' @param filename %% ~~Describe \code{filename} here~~
+#' @param addPercEV %% ~~Describe \code{addPercEV} here~~
+#' @param obs.color.title %% ~~Describe \code{obs.color.title} here~~
+#' @param obs.pch.title %% ~~Describe \code{obs.pch.title} here~~
+#' @param var.suppl %% ~~Describe \code{var.suppl} here~~
+#' @param var.suppl.color %% ~~Describe \code{var.suppl.color} here~~
+#' @param var.text.size %% ~~Describe \code{var.text.size} here~~
+#' @param var.arrow.size %% ~~Describe \code{var.arrow.size} here~~
+#' @param main %% ~~Describe \code{main} here~~
+#' @param asp %% ~~Describe \code{asp} here~~
+#' @param alpha %% ~~Describe \code{alpha} here~~
+#' @param xlim %% ~~Describe \code{xlim} here~~
+#' @param ylim %% ~~Describe \code{ylim} here~~
+#' @param legend %% ~~Describe \code{legend} here~~
+#' @param \dots %% ~~Describe \code{\dots} here~~
+#' @return %% ~Describe the value returned %% If it is a LIST, use %%
+#' \item{comp1 }{Description of 'comp1'} %% \item{comp2 }{Description of
+#' 'comp2'} %% ...
+#' @note %% ~~further notes~~
+#' @author %% ~~who you are~~
+#' @seealso %% ~~objects to See Also as \code{\link{help}}, ~~~
+#' @references %% ~put references to the literature/web site here ~
+#' @keywords ~kwd1 ~kwd2
+#' @examples
+#' 
+#' 
+#' 
+#' data(pal.uno)
+#' 
+#' par(mar=c(1,1,1,1))
+#' Y=matrix(rnorm(30),10,3)
+#' rownames(Y)=paste("obs",1:nrow(Y))
+#' sv=svd(Y)
+#' 
+#' pc.biplot(sv)
+#' 
+#' #i nomi vengono persi con svd
+#' pc.biplot(sv,obs.names = TRUE)
+#' # soluzione a mano
+#' rownames(sv$u)=rownames(Y)
+#' pc.biplot(sv,obs.names = TRUE)
+#' 
+#' 
+#' ###########
+#' sv=svd(scale(Y,center=TRUE,scale=FALSE))
+#' pc.biplot(sv,obs.names = TRUE)
+#' 
+#' pc=princomp(Y)
+#' pc.biplot(pc,obs.names = TRUE)
+#' 
+#' pc=prcomp(Y)
+#' pc.biplot(pc,obs.names = TRUE)
+#' 
+#' pc.biplot(sv,asp=1,obs.col.palette = pal.uno)
+#' 
+#' 
+#' 
+#' pc.biplot(sv,obs.opt = list(col=rep(1:2,5)))
+#' 
+#' @export pc.biplot
 pc.biplot <-
 function(SV, x=1, y=2,  
                      obs.opt=list(cex=2,pch=20),

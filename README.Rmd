@@ -17,9 +17,6 @@ To **install** this github package (in R):
 
 ```{r,  message = FALSE}
 library(rospo)
-```
-
-```{r, message = FALSE}
 
 data(pal.unipd.76)
 
