@@ -55,30 +55,52 @@ function(mat,ndim=1,prefix="PC"){
 }
 .get.legend.opt <-
 function(legend.opt,obs.opt){
-  identificatori.gruppi=c("col","bg","pch")
 
+  if(!is.null(obs.opt$bg))
+    if(is.factor(obs.opt$bg))
+      obs.opt$bg=as.numeric(obs.opt$bg)
+  identificatori.gruppi=c("col","bg","pch")
+  identificatori.gruppi.name=c("col","bg","pch.name")
+  if(!is.null(names(obs.opt$pch))) 
+    obs.opt$pch.name=names(obs.opt$pch) else
+      obs.opt$pch.name=obs.opt$pch
+  
   leg.elements=unique(as.data.frame(obs.opt[identificatori.gruppi]),MARGIN = 1)
   if((nrow(leg.elements)<=1)&&(is.null(legend.opt)))
     legend.opt=NULL else 
       { 
         #legent.opt default
         if(is.null(legend.opt)){
-           legend.opt=as.list(rep(NA,length(identificatori.gruppi)+1))
-           names(legend.opt)=c(identificatori.gruppi,"x")
-           legend.opt$x="bottomleft"
+           legend.opt = list(x="bottomleft")
            }
         elementi.variabili=names(which(apply(leg.elements,2,function(x)length(unique(x))>1)))
-        legend.opt$legend=apply(leg.elements[,elementi.variabili,drop=FALSE],1,paste,collapse="-")
-
+        leg.elements.leg=unique(as.data.frame(obs.opt[identificatori.gruppi.name]),MARGIN = 1)
+        names(leg.elements.leg)=gsub("pch.name","pch",names(leg.elements.leg))
+        
+        elementi.variabili.leg=elementi.variabili
+        if(!obs.opt$legend_bg){ 
+          leg.elements.leg$bg=NULL
+          elementi.variabili.leg=setdiff(elementi.variabili.leg,"bg")
+        }
+        
+        legend.opt$legend=apply(leg.elements.leg[,elementi.variabili.leg,drop=FALSE],1,paste,collapse="-")
+        
+        legend.opt=c(legend.opt,sapply(setdiff(colnames(leg.elements),elementi.variabili),
+          function(tag) leg.elements[1,tag]))
+          
+        
         for (i in setdiff(identificatori.gruppi,names(which(!is.na(legend.opt)))))
           legend.opt[[i]]=leg.elements[,i]
 #         names(legend.opt)[which(names(legend.opt)=="bg")]="fill"
         if(is.null(legend.opt$bty)) legend.opt$bty="n"
    }
+
+
+  if(!is.null(names(legend.opt)))names(legend.opt)=gsub("bg","pt.bg",names(legend.opt))
   legend.opt
 }
 .get.obs.opt <-
-function(obs.opt,obs.col.palette=NULL,SV){
+function(obs.opt,obs.col.palette=NULL,SV,obs.pch.palette=NULL){
   
   #   if(is.null(var.suppl.opt$col)) var.suppl.color=greyUnipd
   if(is.null(obs.opt$names)) obs.names=FALSE
@@ -90,14 +112,33 @@ function(obs.opt,obs.col.palette=NULL,SV){
   if(obs.opt$col[1]=="each.obs")
     obs.opt$col=1:n
 
-  if(is.null(obs.opt$pch)) obs.opt$pch=20
-  
-  if(is.null(obs.opt$bg)) obs.opt$bg=1
+  if(is.null(obs.opt$bg)) {
+    obs.opt$bg=obs.opt$col
+    obs.opt$legend_bg=FALSE
+  } else obs.opt$legend_bg=TRUE
   if(obs.opt$bg[1]=="each.obs")
     obs.opt$bg=1:n
   
   if(!is.null(obs.col.palette))
       palette(obs.col.palette) 
+  
+  
+  if(is.null(obs.pch.palette))
+    obs.pch.palette=21:22 
+  
+  if(is.null(obs.opt$pch)) obs.opt$pch=20
+  
+  if(!is.numeric(obs.opt$pch)){    
+    obs.opt$pch=factor(obs.opt$pch)
+    labs=levels(obs.opt$pch)
+    obs.pch.palette=rep(obs.pch.palette,
+                        length.out = nlevels(obs.opt$pch))
+    obs.opt$pch=as.numeric(obs.opt$pch)
+    names_pch=labs[obs.opt$pch]
+    obs.opt$pch= obs.pch.palette[obs.opt$pch]
+    names(obs.opt$pch)=names_pch
+  }
+   
   obs.opt
 }
 .get.var.opt <-

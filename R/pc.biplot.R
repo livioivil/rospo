@@ -6,10 +6,10 @@
 #' 
 #' %% ~~ If necessary, more details than the description above ~~
 #' 
-#' @param SV %% ~~Describe \code{SV} here~~
-#' @param x %% ~~Describe \code{x} here~~
-#' @param y %% ~~Describe \code{y} here~~
-#' @param title %% ~~Describe \code{title} here~~
+#' @param SV the result of a call to princomp, prcomp or svd function.
+#' @param x dimension on the x axis (number or name)
+#' @param y dimension on the y axis (number or name)
+#' @param title a string. "Biplot" by default.
 #' @param obs.opt %% ~~Describe \code{obs.opt} here~~
 #' @param obs.names %% ~~Describe \code{obs.names} here~~
 #' @param obs.col.palette %% ~~Describe \code{obs.col.palette} here~~
@@ -82,6 +82,7 @@ function(SV, x=1, y=2,
                      obs.opt=list(cex=2,pch=20),
                      obs.names=FALSE,
                      obs.col.palette=NULL,  
+                     obs.pch.palette=NULL,  
                      var.opt=NULL,
                      var.names=NULL, 
                      var.col.palette=NULL, 
@@ -96,7 +97,7 @@ function(SV, x=1, y=2,
                      var.arrow.size=.2,
                      main="Biplot",
                      asp=NULL,
-                     alpha=1/2,
+                     alpha=.5,
                      xlim=NULL,ylim=NULL,
                      legend=NULL,...) {
 
@@ -106,7 +107,7 @@ function(SV, x=1, y=2,
   old.par=par()
   n.obs=nrow(SV$u)
   n.vars=nrow(SV$v)
-  obs.opt=.get.obs.opt(obs.opt,obs.col.palette,SV=SV)
+  obs.opt=.get.obs.opt(obs.opt,obs.col.palette,SV=SV,obs.pch.palette=obs.pch.palette)
   var.opt=.get.var.opt(var.opt,var.col.palette,SV=SV)
   
   
@@ -176,13 +177,10 @@ function(SV, x=1, y=2,
        col=var.text.col,cex=var.text.cex)
   
   
-  
   if((legend==TRUE)||is.null(legend)){
     legend.opt=.get.legend.opt(legend,obs.opt)
     if(!is.null(legend.opt))
-    legend(legend.opt$x,legend.opt$y,
-      legend=legend.opt$legend,col=legend.opt$col,
-         pch=legend.opt$pch,bty=legend.opt$bty)
+      do.call('legend',legend.opt)
   }
 par(mar=old.par.mar)
 }
