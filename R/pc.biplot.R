@@ -96,7 +96,7 @@ function(SV, x=1, y=2,
                      var.text.cex=1,
                      var.arrow.size=.2,
                      main="Biplot",
-                     asp=NULL,
+                     asp=1,
                      alpha=.5,
                      xlim=NULL,ylim=NULL,
                      legend=NULL,...) {
