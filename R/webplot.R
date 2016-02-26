@@ -60,7 +60,9 @@ function(data, data.row = NULL, y.cols = NULL, main = NULL, add = F,
     main = rownames(data)[data.row]
   if (scale == T) {
 #     data = scale(data[, y.cols])
-    data = apply(data, 2, function(x) ((x - min(x))/(max(x)-min(x))+.1)/1.1)
+    if(nrow(data)==1) 
+      data=data/max(abs(data)) else
+        data = apply(data, 2, function(x) ((x - min(x))/(max(x)-min(x))+.1)/1.1)
   }
   data = as.data.frame(data)
   n.y = length(y.cols)
