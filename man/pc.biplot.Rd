@@ -11,10 +11,10 @@ pc.biplot(SV, x = 1, y = 2, obs.opt = list(cex = 2, pch = 20),
   var.suppl.color = NULL, var.text.size = 3, var.text.col = "gray30",
   var.text.relpos = NULL, var.text.cex = 1, var.arrow.size = 0.2,
   main = "Biplot", asp = 1, alpha = 0.5, xlim = NULL, ylim = NULL,
-  legend = NULL, ...)
+  legend = NULL, xylabs = "PC", percToAdd = NULL, ...)
 }
 \arguments{
-\item{SV}{the result of a call to princomp, prcomp or svd function.}
+\item{SV}{the result of a call to princomp, prcomp, svd function. It can also be a metaMDS object (from vegan library).}
 
 \item{x}{dimension on the x axis (number or name)}
 
@@ -58,13 +58,17 @@ pc.biplot(SV, x = 1, y = 2, obs.opt = list(cex = 2, pch = 20),
 
 \item{legend}{%% ~~Describe \code{legend} here~~}
 
+\item{xylabs}{string or vector of labels. \code{"PC"} by default.}
+
+\item{percToAdd}{usually \code{NULL}}
+
+\item{\dots}{%% ~~Describe \code{\dots} here~~}
+
 \item{title}{a string. "Biplot" by default.}
 
 \item{obs.color.title}{%% ~~Describe \code{obs.color.title} here~~}
 
 \item{obs.pch.title}{%% ~~Describe \code{obs.pch.title} here~~}
-
-\item{\dots}{%% ~~Describe \code{\dots} here~~}
 }
 \description{
 SV e' il risultato di prcomp, di princomp o di svd.  assi calcolati come in
@@ -114,15 +118,14 @@ pc.biplot(sv,asp=1,obs.col.palette = pal.uno)
 pc.biplot(sv,obs.opt = list(col=rep(1:2,5)))
 
 }
-\author{
-%% ~~who you are~~
-}
 \references{
 %% ~put references to the literature/web site here ~
 }
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
+\author{
+%% ~~who you are~~
+}
 \keyword{~kwd1}
 \keyword{~kwd2}
-

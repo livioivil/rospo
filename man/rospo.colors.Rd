@@ -2,14 +2,14 @@
 % Please edit documentation in R/rospo-package.R
 \docType{data}
 \name{rospo.colors}
+\alias{rospo.colors}
 \alias{col.grey.unipd}
 \alias{col.red.unipd}
+\alias{pal.uno}
 \alias{pal.due}
 \alias{pal.tre}
 \alias{pal.unipd}
 \alias{pal.unipd.76}
-\alias{pal.uno}
-\alias{rospo.colors}
 \title{colors and palette}
 \format{The format is: chr [1:5] "#FF0000" "#00A08A" "#F2AD00" "#F98400"
 "#5BBCD6"}
@@ -43,4 +43,3 @@ matplot(X, type = "b", pch = c(15,17,19), lwd=5,lty=1,col=pal.tre,main="pal.tre"
 %% ~~ possibly secondary sources and usages ~~
 }
 \keyword{datasets}
-

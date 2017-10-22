@@ -30,7 +30,12 @@ function(SV){
     #matrice loadings
     names(SV)[which.hasname(SV,"rotation")]="v"    
   }  
-  
+  if(is(SV,"metaMDS")){
+    SV$v=SV$species
+    SV$u=scale(SV$points)
+    SV$d=  as.vector(attributes(SV$u)$`scaled:scale`)
+    SV=SV[c("d","u","v")]
+  }
   SV$u=.fix.names(SV$u,1,"")
   SV$v=.fix.names(SV$v,2,"Pc")
   SV$d=.fix.names(SV$d,1,"Sd")

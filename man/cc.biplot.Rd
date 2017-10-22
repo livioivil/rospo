@@ -5,9 +5,9 @@
 \title{cc.biplot}
 \usage{
 cc.biplot(SV, x = 1, y = 2, main = "Biplot", obs.col.palette = NULL,
-  obs.label.size = 2, obs.names = NULL, obs.opt = list(cex = 2),
+  obs.label.size = 2, obs.names = FALSE, obs.opt = list(cex = 2),
   var.names.x = NULL, var.names.y = NULL, var.color.x = NULL,
-  var.color.y = NULL, ...)
+  var.color.y = NULL, xylabs = "CC", percToAdd = NULL, ...)
 }
 \arguments{
 \item{SV}{result of cc and rcc of library(CCA)}
@@ -32,9 +32,13 @@ cc.biplot(SV, x = 1, y = 2, main = "Biplot", obs.col.palette = NULL,
 
 \item{var.color.y}{%% ~~Describe \code{var.color.y} here~~}
 
-\item{title}{%% ~~Describe \code{title} here~~}
+\item{xylabs}{string or vector of labels. \code{"CC1"} by default.}
 
 \item{\dots}{%% ~~Describe \code{\dots} here~~}
+
+\item{title}{%% ~~Describe \code{title} here~~}
+
+\item{usually}{NULL}
 }
 \description{
 cc.biplot
@@ -45,48 +49,14 @@ cc.biplot
 \note{
 %% ~~further notes~~
 }
-\examples{
-
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (SV, x = 1, y = 2, title = "Biplot", obs.names = NULL, 
-    obs.opt = list(cex = 2), obs.label.size = obs.size, obs.col.palette = NULL, 
-    var.names.x = NULL, var.names.y = NULL, var.color.x = NULL, 
-    var.color.y = NULL, ...) 
-{
-    nvar.x = nrow(SV$scores$corr.X.xscores)
-    nvar.y = nrow(SV$scores$corr.Y.xscores)
-    SV = list(x = SV$scores$xscores, rotation = rbind(SV$scores$corr.X.xscores, 
-        SV$scores$corr.Y.xscores), sdev = SV$cor)
-    colnames(SV$rotation) = paste("CC", 1:ncol(SV$rotation), 
-        sep = "")
-    colnames(SV$x) = paste("CC", 1:ncol(SV$x), sep = "")
-    var.names = c(var.names.x, var.names.y)
-    if (is.null(var.color.x)) 
-        var.color.x = "#444F51"
-    if (is.null(var.color.y)) 
-        var.color.y = "#9b0014"
-    var.color = c(rep(var.color.x, length.out = nvar.x), rep(var.color.y, 
-        length.out = nvar.y))
-    pc.biplot(SV, x = x, y = y, title = title, obs.names = obs.names, 
-        obs.opt = obs.opt, obs.label.size = obs.label.size, obs.col.palette = obs.col.palette, 
-        var.names = var.names, var.opt = list(col = var.color), 
-        ...)
-  }
-
-}
-\author{
-%% ~~who you are~~
-}
 \references{
 %% ~put references to the literature/web site here ~
 }
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
+\author{
+%% ~~who you are~~
+}
 \keyword{~kwd1}
 \keyword{~kwd2}
-

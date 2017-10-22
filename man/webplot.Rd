@@ -30,9 +30,9 @@ min(x))/(max(x)-min(x))+.1)/1.1)}
 
 \item{cex}{as in \code{plot()}}
 
-\item{col}{as in \code{plot()}}
-
 \item{\dots}{%% ~~Describe \code{\dots} here~~}
+
+\item{col}{as in \code{plot()}}
 }
 \description{
 webplot
@@ -52,15 +52,14 @@ webplot.multi(X[1,])
 webplot.multi(X,col=pal.unipd)
 
 }
-\author{
-%% ~~who you are~~
-}
 \references{
 %% ~put references to the literature/web site here ~
 }
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
+\author{
+%% ~~who you are~~
+}
 \keyword{~kwd1}
 \keyword{~kwd2}
-

@@ -6,7 +6,7 @@
 #' 
 #' %% ~~ If necessary, more details than the description above ~~
 #' 
-#' @param SV the result of a call to princomp, prcomp or svd function.
+#' @param SV the result of a call to princomp, prcomp, svd function. It can also be a metaMDS object (from vegan library).
 #' @param x dimension on the x axis (number or name)
 #' @param y dimension on the y axis (number or name)
 #' @param title a string. "Biplot" by default.
@@ -31,6 +31,8 @@
 #' @param xlim %% ~~Describe \code{xlim} here~~
 #' @param ylim %% ~~Describe \code{ylim} here~~
 #' @param legend %% ~~Describe \code{legend} here~~
+#' @param xylabs string or vector of labels. \code{"PC"} by default.
+#' @param percToAdd usually \code{NULL}
 #' @param \dots %% ~~Describe \code{\dots} here~~
 #' @return %% ~Describe the value returned %% If it is a LIST, use %%
 #' \item{comp1 }{Description of 'comp1'} %% \item{comp2 }{Description of
@@ -99,7 +101,9 @@ function(SV, x=1, y=2,
                      asp=1,
                      alpha=.5,
                      xlim=NULL,ylim=NULL,
-                     legend=NULL,...) {
+                     legend=NULL,
+                     xylabs="PC",
+         percToAdd=NULL,...) {
 
   #######################
   SV=.convertAny2SVD(SV)
@@ -113,22 +117,25 @@ function(SV, x=1, y=2,
   
   
   if(!is.numeric(x)){
-     x.name=colnames(SV$x)[x]
-     idx=which(colnames(SV$x)==x.name)
+     idx=which(colnames(SV$v)==x.name)
      } else idx=x
   if(!is.numeric(y)){
-    y.name=colnames(SV$x)[y]
-    idy=which(colnames(SV$x)==y.name)
+    idy=which(colnames(SV$v)==y.name)
   } else idy=y
+  x.name=colnames(SV$v)[idx]
+  y.name=colnames(SV$v)[idy]
   
   X=SV$u[,c(idx,idy)]%*%diag(SV$d[c(idx,idy)]^alpha)*sqrt(n.obs) 
   ARROWS=SV$v[,c(idx,idy)]%*%diag(SV$d[c(idx,idy)]^(1-alpha))*sqrt(n.vars)
   rescale.coefs=(SV$d[c(idx,idy)]^alpha)*(SV$d[c(idx,idy)]^(1-alpha))/sqrt(n.obs)*sqrt(n.vars)
   
-  
-  
-  xLabel=ifelse(addPercEV,paste("Pc",x," (",round(SV$d[idx]^2/sum(SV$d^2)*100,0),"%)",sep=""),x)  
-  yLabel=ifelse(addPercEV,paste("Pc",y," (",round(SV$d[idy]^2/sum(SV$d^2)*100,0),"%)",sep=""),y)  
+  xLabel=paste(xylabs,x,sep="")
+  yLabel=paste(xylabs,y,sep="")
+  if(addPercEV){
+    if(is.null(percToAdd))  percToAdd=paste(" (",round(SV$d[c(idx,idy)]^2/sum(SV$d^2)*100,0),"%)",sep="")
+    xLabel=paste(xLabel,percToAdd[1],sep="")  
+    yLabel=paste(yLabel,percToAdd[2],sep="")
+  }
   
   if(is.null(xlim)){
     temp=range(c(X[,1],ARROWS[,1])) 
@@ -169,11 +176,12 @@ function(SV, x=1, y=2,
   abline(h=0,col="gray90")
   
   arrows(0,0,ARROWS[,1],ARROWS[,2],col=var.opt$col,
-         lwd=lwd,angle=15,length=.1)
+         lwd=var.opt$lwd,angle=15,length=.1)
   if(!is.null(var.text.relpos)) 
     var.text.xy=ARROWS*var.text.relpos else 
       var.text.xy=ARROWS
-  text(var.text.xy[,1],var.text.xy[,2],labels=rownames(ARROWS),
+  if(is.null(var.names))  var.names=rownames(ARROWS)
+  text(var.text.xy[,1],var.text.xy[,2],labels=var.names,
        col=var.text.col,cex=var.text.cex)
   
   

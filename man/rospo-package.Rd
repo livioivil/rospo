@@ -2,8 +2,8 @@
 % Please edit documentation in R/rospo-package.R
 \docType{package}
 \name{rospo-package}
-\alias{rospo}
 \alias{rospo-package}
+\alias{rospo}
 \title{c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_title(\"#1\")}",
 "rospo")\Sexpr{tools:::Rd_package_title("rospo")}}
 \description{
@@ -68,4 +68,3 @@ c("\\Sexpr[results=rd,stage=build]{tools:::Rd_package_maintainer(\"#1\")}",
 "rospo")\Sexpr{tools:::Rd_package_maintainer("rospo")}
 }
 \keyword{package}
-

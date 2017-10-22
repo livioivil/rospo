@@ -32,15 +32,14 @@ function (X, ...)
 apply(X, 2, var, ...)
 
 }
-\author{
-%% ~~who you are~~
-}
 \references{
 %% ~put references to the literature/web site here ~
 }
 \seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
+\author{
+%% ~~who you are~~
+}
 \keyword{~kwd1}
 \keyword{~kwd2}
-

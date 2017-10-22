@@ -14,4 +14,3 @@ freq_xtable_totale(tab, digits = NULL, ...)
 \description{
 as xtable, but put a line between befor the total. Also substitute `Sum` with `Totale`
 }
-
