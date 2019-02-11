@@ -1,4 +1,4 @@
-Vignette for R.O.S.P.O library
+The R.O.S.P.O library
 ================
 Livio Finos and the others of Rospo
 11 febbraio 2019
@@ -71,6 +71,7 @@ pc.biplot(sv,obs.opt = list(col=rep(1:2,5)))
 ### Plot partial effects in a model
 
 ``` r
+set.seed(1)
 n=100
 X=matrix(rnorm(n*3),n,3)
 X[,2]=sign(X[,2])
@@ -88,22 +89,22 @@ summary(mod)
     ## lm(formula = y ~ X1 * X2 + X3, data = D)
     ## 
     ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -2.6937 -0.6751 -0.1059  0.5979  3.1567 
+    ##      Min       1Q   Median       3Q      Max 
+    ## -2.35147 -0.54510 -0.06024  0.70062  1.88451 
     ## 
     ## Coefficients:
     ##             Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept) -0.12594    0.10704  -1.177    0.242    
-    ## X1           1.00323    0.10349   9.694 7.45e-16 ***
-    ## X2           0.09518    0.10567   0.901    0.370    
-    ## X3           0.06983    0.09209   0.758    0.450    
-    ## X1:X2        0.92947    0.10261   9.059 1.70e-14 ***
+    ## (Intercept)  0.09565    0.10048   0.952    0.344    
+    ## X1           0.86927    0.11196   7.764 9.41e-12 ***
+    ## X2          -0.05308    0.10039  -0.529    0.598    
+    ## X3           0.07689    0.09288   0.828    0.410    
+    ## X1:X2        0.64920    0.11254   5.769 9.94e-08 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
     ## 
-    ## Residual standard error: 1.051 on 95 degrees of freedom
-    ## Multiple R-squared:  0.6481, Adjusted R-squared:  0.6332 
-    ## F-statistic: 43.73 on 4 and 95 DF,  p-value: < 2.2e-16
+    ## Residual standard error: 0.9507 on 95 degrees of freedom
+    ## Multiple R-squared:  0.4509, Adjusted R-squared:  0.4278 
+    ## F-statistic:  19.5 on 4 and 95 DF,  p-value: 9.622e-12
 
 ``` r
 predict_funct=function(newdata) predict(mod,newdata=newdata)
@@ -113,6 +114,10 @@ plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2)
 ![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ``` r
+# in this case the same as:
+# plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2,center_effs = FALSE)
+
+
 # Regression tree model
 require(rpart)
 ```
@@ -129,17 +134,21 @@ print(mod)
     ## node), split, n, deviance, yval
     ##       * denotes terminal node
     ## 
-    ##  1) root 100 298.24770 -0.05695942  
-    ##    2) X1< -0.2617744 37  69.34738 -1.26355300  
-    ##      4) X2>=0 18  29.75494 -2.02891800 *
-    ##      5) X2< 0 19  19.05917 -0.53846970 *
-    ##    3) X1>=-0.2617744 63 143.39700  0.65167470  
-    ##      6) X2< 0 34  40.04831 -0.05305522  
-    ##       12) X1>=0.4562302 19  18.77715 -0.35551370 *
-    ##       13) X1< 0.4562302 15  17.33138  0.33005880 *
-    ##      7) X2>=0 29  66.66552  1.47791000  
-    ##       14) X1< 0.6602392 15  14.02249  0.43781790 *
-    ##       15) X1>=0.6602392 14  19.03024  2.59229400 *
+    ##  1) root 100 156.377600  0.28224150  
+    ##    2) X1< 0.5939238 71  89.131490 -0.08831340  
+    ##      4) X1< -0.6166335 20  32.211400 -0.71278680  
+    ##        8) X3< 0.4018905 12  16.658600 -1.11442200 *
+    ##        9) X3>=0.4018905 8  10.713480 -0.11033440 *
+    ##      5) X1>=-0.6166335 51  46.062190  0.15657810  
+    ##       10) X3< -0.7595947 8   8.421524 -0.36719190 *
+    ##       11) X3>=-0.7595947 43  35.037670  0.25402370  
+    ##         22) X3>=-0.3601846 36  29.166040  0.14004250  
+    ##           44) X1>=-0.03056194 19  18.381570 -0.06116896 *
+    ##           45) X1< -0.03056194 17   9.155507  0.36492590 *
+    ##         23) X3< -0.3601846 7   2.998602  0.84021300 *
+    ##    3) X1>=0.5939238 29  33.628580  1.18946200  
+    ##      6) X2< 0 14   7.265372  0.54656190 *
+    ##      7) X2>=0 15  15.175990  1.78950200 *
 
 ``` r
 printcp(mod)
@@ -150,19 +159,20 @@ printcp(mod)
     ## rpart(formula = y ~ X1 + X2 + X3, data = D, control = list(cp = 1e-04))
     ## 
     ## Variables actually used in tree construction:
-    ## [1] X1 X2
+    ## [1] X1 X2 X3
     ## 
-    ## Root node error: 298.25/100 = 2.9825
+    ## Root node error: 156.38/100 = 1.5638
     ## 
     ## n= 100 
     ## 
-    ##         CP nsplit rel error  xerror     xstd
-    ## 1 0.286686      0   1.00000 1.01747 0.165720
-    ## 2 0.122996      1   0.71331 0.81195 0.110165
-    ## 3 0.112701      2   0.59032 0.78498 0.103954
-    ## 4 0.068846      3   0.47762 0.69040 0.090570
-    ## 5 0.013210      4   0.40877 0.57559 0.073826
-    ## 6 0.000100      5   0.39556 0.60644 0.075771
+    ##         CP nsplit rel error  xerror    xstd
+    ## 1 0.214977      0   1.00000 1.02029 0.15404
+    ## 2 0.071540      1   0.78502 0.89723 0.12240
+    ## 3 0.069434      2   0.71348 0.94035 0.12114
+    ## 4 0.030946      3   0.64405 0.86327 0.12084
+    ## 5 0.017509      4   0.61310 0.86565 0.11399
+    ## 6 0.010417      6   0.57809 0.86918 0.11371
+    ## 7 0.000100      7   0.56767 0.85233 0.11296
 
 ``` r
 predict_funct=function(newdata) predict(mod,newdata=newdata)
@@ -172,14 +182,7 @@ plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2)
 ![](README_files/figure-markdown_github/unnamed-chunk-3-2.png)
 
 ``` r
-# compare the two:
-plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = TRUE)
+plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2,center_effs = FALSE)
 ```
 
 ![](README_files/figure-markdown_github/unnamed-chunk-3-3.png)
-
-``` r
-plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = FALSE)
-```
-
-![](README_files/figure-markdown_github/unnamed-chunk-3-4.png)

@@ -1,5 +1,5 @@
 ---
-title: "Vignette for R.O.S.P.O library"
+title: "The R.O.S.P.O library"
 author: "Livio Finos and the others of Rospo"
 date: "11 febbraio 2019"
 output: rmarkdown::github_document
@@ -65,6 +65,7 @@ pc.biplot(sv,obs.opt = list(col=rep(1:2,5)))
 ### Plot partial effects in a model
 
 ```{r}
+set.seed(1)
 n=100
 X=matrix(rnorm(n*3),n,3)
 X[,2]=sign(X[,2])
@@ -79,6 +80,10 @@ summary(mod)
 predict_funct=function(newdata) predict(mod,newdata=newdata)
 plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2)
 
+# in this case the same as:
+# plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2,center_effs = FALSE)
+
+
 # Regression tree model
 require(rpart)
 mod=rpart(y~X1+X2+X3,data=D,control = list(cp=.0001))
@@ -87,8 +92,8 @@ printcp(mod)
 
 predict_funct=function(newdata) predict(mod,newdata=newdata)
 plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2)
-# compare the two:
-plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = TRUE)
-plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = FALSE)
+
+plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2,center_effs = FALSE)
+
 ```
 
