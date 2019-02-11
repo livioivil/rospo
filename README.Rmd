@@ -1,3 +1,13 @@
+---
+title: "Vignette for R.O.S.P.O library"
+author: "Livio Finos and the others of Rospo"
+date: "11 febbraio 2019"
+output: rmarkdown::github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 # Utilities from associazionerospo.org 
 
