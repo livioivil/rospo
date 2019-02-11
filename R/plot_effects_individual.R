@@ -9,6 +9,7 @@
 #' @param npoints 10
 #' @param center_effs logical. Should be the effect of the oder predictors removed from the lines and the observations? 
 #' @export
+#' @import ggplot2
 #' @examples
 #' n=100
 #' X=matrix(rnorm(n*3),n,3)
@@ -35,8 +36,9 @@
 #' printcp(mod)
 #' 
 #' predict_funct=function(newdata) predict(mod,newdata=newdata)
-#' plot_effects_individual(D,"X1","y",predict_funct=predict_funct)
+#' #plot_effects_individual(D,"X1","y",predict_funct=predict_funct)
 #' plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2)
+#' # compare the two:
 #' plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = TRUE)
 #' plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = FALSE)
 #' }
@@ -44,8 +46,12 @@
 plot_effects_individual <- function(data,pred_name,resp_name,predict_funct,
                          col.by=NULL,npoints=10,center_effs=TRUE){
   rownames(data)=NULL
-  rng=range(data[,pred_name])
-  pred_values=seq(from=rng[1],to=rng[2],length.out = npoints)
+  if(is.numeric(data[,pred_name])) {
+    rng=range(data[,pred_name])
+    pred_values=seq(from=rng[1],to=rng[2],length.out = npoints)
+  } else {
+    pred_values=unique(data[,pred_name])
+  }
   temp=data
   temp$pred_var=temp[,pred_name]
   temp[,pred_name]=mean(data[,pred_name])
@@ -59,7 +65,8 @@ plot_effects_individual <- function(data,pred_name,resp_name,predict_funct,
                         center_effs=center_effs,
                         predict_funct=predict_funct)
   # names(data)=gsub(resp_name,"resp_var",names(data))
-  if(is.null(col.by)) temp$col.by=factor(1) else
+  # mat_lines
+    if(is.null(col.by)) temp$col.by=factor(1) else
     temp$col.by=factor(col.by)
   
   if(center_effs) {
@@ -72,8 +79,8 @@ plot_effects_individual <- function(data,pred_name,resp_name,predict_funct,
   mat_lines=t(mat_lines)
   
   if(center_effs)   
-    temp$nett_resp=data[resp_name]-predict_funct(temp) else
-      temp$nett_resp=data[resp_name]
+    temp$nett_resp=unlist(data[resp_name])-predict_funct(temp) else
+      temp$nett_resp=unlist(data[resp_name])
   # names(temp)=gsub(pred_name,"pred_var",names(temp))
   
   #ggplot needs a dataframe
@@ -84,7 +91,7 @@ plot_effects_individual <- function(data,pred_name,resp_name,predict_funct,
   plot_data <- reshape2::melt(mat_lines,id.var="id")
   plot_data$col.by=temp$col.by
   plot_data$pred_var=rep(pred_values,each=nrow(data))
-  pp=ggplot2::ggplot()+ geom_line(data=plot_data, 
+  pp=ggplot2::ggplot()+ ggplot2::geom_line(data=plot_data, 
                      aes(x=pred_var,y=value,group=id,colour=col.by))
   pp=pp+ theme(legend.position="none")+labs(x=pred_name,y=resp_name)
   pp=pp+geom_point(data=temp, aes(x=pred_var,y=nett_resp,colour=col.by))
@@ -93,8 +100,9 @@ plot_effects_individual <- function(data,pred_name,resp_name,predict_funct,
 
 ############
 make_line_pred <- function(i,pred_id,data,pred_values,pred_name,center_effs,predict_funct){
-  newdata=data.frame(pred_values,data[i,-pred_id],row.names=NULL)
+  newdata=data.frame(pred_values,data[i,-pred_id,drop=FALSE],row.names=NULL)
   names(newdata)[1]=pred_name
+  newdata=newdata[,c(2:pred_id,1,(pred_id+1):ncol(newdata))]
   pred_vals=predict_funct(newdata)
   pred_vals=scale(pred_vals,scale = FALSE,center = center_effs)
   pred_vals

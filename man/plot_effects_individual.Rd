@@ -22,6 +22,9 @@ plot_effects_individual(data, pred_name, resp_name, predict_funct,
 
 \item{center_effs}{logical. Should be the effect of the oder predictors removed from the lines and the observations?}
 }
+\description{
+plot_effects_individual
+}
 \examples{
 n=100
 X=matrix(rnorm(n*3),n,3)
@@ -48,8 +51,9 @@ print(mod)
 printcp(mod)
 
 predict_funct=function(newdata) predict(mod,newdata=newdata)
-plot_effects_individual(D,"X1","y",predict_funct=predict_funct)
+#plot_effects_individual(D,"X1","y",predict_funct=predict_funct)
 plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2)
+# compare the two:
 plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = TRUE)
 plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = FALSE)
 }

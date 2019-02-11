@@ -6,12 +6,12 @@
 \usage{
 pc.biplot(SV, x = 1, y = 2, obs.opt = list(cex = 2, pch = 20),
   obs.names = FALSE, obs.col.palette = NULL, obs.pch.palette = NULL,
-  var.opt = NULL, var.names = NULL, var.col.palette = NULL, lwd = 2,
-  filename = NULL, addPercEV = TRUE, var.suppl = NULL,
+  var.opt = NULL, var.names = NULL, var.col.palette = NULL,
+  lwd = 2, filename = NULL, addPercEV = TRUE, var.suppl = NULL,
   var.suppl.color = NULL, var.text.size = 3, var.text.col = "gray30",
   var.text.relpos = NULL, var.text.cex = 1, var.arrow.size = 0.2,
-  main = "Biplot", asp = 1, alpha = 0.5, xlim = NULL, ylim = NULL,
-  legend = NULL, xylabs = "PC", percToAdd = NULL, ...)
+  main = "Biplot", asp = 1, alpha = 0.5, xlim = NULL,
+  ylim = NULL, legend = NULL, xylabs = "PC", percToAdd = NULL, ...)
 }
 \arguments{
 \item{SV}{the result of a call to princomp, prcomp, svd function. It can also be a metaMDS object (from vegan library).}

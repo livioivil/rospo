@@ -4,10 +4,11 @@
 \alias{cc.biplot}
 \title{cc.biplot}
 \usage{
-cc.biplot(SV, x = 1, y = 2, main = "Biplot", obs.col.palette = NULL,
-  obs.label.size = 2, obs.names = FALSE, obs.opt = list(cex = 2),
-  var.names.x = NULL, var.names.y = NULL, var.color.x = NULL,
-  var.color.y = NULL, xylabs = "CC", percToAdd = NULL, ...)
+cc.biplot(SV, x = 1, y = 2, main = "Biplot",
+  obs.col.palette = NULL, obs.label.size = 2, obs.names = FALSE,
+  obs.opt = list(cex = 2), var.names.x = NULL, var.names.y = NULL,
+  var.color.x = NULL, var.color.y = NULL, xylabs = "CC",
+  percToAdd = NULL, ...)
 }
 \arguments{
 \item{SV}{result of cc and rcc of library(CCA)}

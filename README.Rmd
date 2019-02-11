@@ -15,12 +15,13 @@ To **install** this github package (in R):
 
 ## Some examples
 
+### webplot
 ```{r,  message = FALSE}
 library(rospo)
 
 data(pal.unipd.76)
 
-####### webplot
+
 X <- as.data.frame(matrix(rpois(30,3),3,10))
 webplot.multi(X,col=pal.unipd.76)
 
@@ -29,7 +30,12 @@ webplot.multi(X,col=pal.unipd.76)
 data(pal.uno)
 palette(pal.uno)
 
-####### biplot
+```
+
+
+### biplot
+```{r,  message = FALSE}
+
 par(mar=c(1,1,1,1))
 Y=matrix(rnorm(30),10,3)
 rownames(Y)=paste("obs",1:nrow(Y))
@@ -43,5 +49,36 @@ pc.biplot(sv,obs.names = TRUE)
 
 pc.biplot(sv,obs.opt = list(col=rep(1:2,5)))
 
+```
+
+
+### Plot partial effects in a model
+
+```{r}
+n=100
+X=matrix(rnorm(n*3),n,3)
+X[,2]=sign(X[,2])
+y=rnorm(n,X[,1]+X[,1]*X[,2])
+D=data.frame(X)
+D$y=y
+
+# Regression model
+mod=lm(y~X1*X2+X3,data=D)
+summary(mod)
+
+predict_funct=function(newdata) predict(mod,newdata=newdata)
+plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2)
+
+# Regression tree model
+require(rpart)
+mod=rpart(y~X1+X2+X3,data=D,control = list(cp=.0001))
+print(mod)
+printcp(mod)
+
+predict_funct=function(newdata) predict(mod,newdata=newdata)
+plot_effects_individual(D,"X1","y",predict_funct=predict_funct,col.by = D$X2)
+# compare the two:
+plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = TRUE)
+plot_effects_individual(D,"X3","y",predict_funct=predict_funct,center_effs = FALSE)
 ```
 
