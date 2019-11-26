@@ -17,9 +17,6 @@ which.hasname
 \details{
 %% ~~ If necessary, more details than the description above ~~
 }
-\note{
-%% ~~further notes~~
-}
 \examples{
 
 ##---- Should be DIRECTLY executable !! ----
@@ -32,15 +29,6 @@ function (X, name)
     which(names(X) == name)
   }
 
-}
-\references{
-%% ~put references to the literature/web site here ~
-}
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-%% ~~who you are~~
 }
 \keyword{~kwd1}
 \keyword{~kwd2}

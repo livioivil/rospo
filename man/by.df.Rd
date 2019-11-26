@@ -6,19 +6,11 @@
 \usage{
 \method{by}{df}(...)
 }
-\arguments{
-\item{\dots}{%% ~~Describe \code{\dots} here~~}
-}
 \description{
 Same as df, but Value is a data.frame, not a list.
 }
 \details{
 Come df, ma value e' un data.frame e non una list
-
-%% ~~ If necessary, more details than the description above ~~
-}
-\note{
-%% ~~further notes~~
 }
 \examples{
 
@@ -41,14 +33,3 @@ function (...)
   }
 
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
-\author{
-%% ~~who you are~~
-}
-\keyword{~kwd1}
-\keyword{~kwd2}
