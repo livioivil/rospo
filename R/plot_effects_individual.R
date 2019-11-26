@@ -48,6 +48,7 @@ plot_effects_individual <- function(data,pred_name,resp_name,predict_funct,
   rownames(data)=NULL
   if(is.numeric(data[,pred_name])) {
     rng=range(data[,pred_name])
+    if(any(is.na(rng))) warning("NA are not allowed!")
     pred_values=seq(from=rng[1],to=rng[2],length.out = npoints)
   } else {
     pred_values=unique(data[,pred_name])
@@ -100,8 +101,8 @@ plot_effects_individual <- function(data,pred_name,resp_name,predict_funct,
 
 ############
 make_line_pred <- function(i,pred_id,data,pred_values,pred_name,center_effs,predict_funct){
-  newdata=data.frame(pred_values,data[i,-pred_id,drop=FALSE],row.names=NULL)
-  names(newdata)[1]=pred_name
+  newdata=cbind(pred_values,data[i,-pred_id,drop=FALSE],row.names=NULL)
+  colnames(newdata)[1]=pred_name
   newdata=newdata[,c(2:pred_id,1,(pred_id+1):ncol(newdata))]
   pred_vals=predict_funct(newdata)
   pred_vals=scale(pred_vals,scale = FALSE,center = center_effs)
